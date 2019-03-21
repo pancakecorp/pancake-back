@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+</head>
+<body>
+    <script>
+        let ws = new WebSocket("ws://localhost:8080");
+
+        ws.onopen = () => {
+            console.log('websocket is connected ...')
+            ws.send('Connected');
+        }
+
+        ws.onmessage = (event) => {
+            console.log(event);
+            document.getElementById("receivedMessage").innerHTML = event.data;
+        }
+
+        function sendMessage() {
+            ws.send('Message send on click')
+        }
+        function receiveMessage(){
+            ws.onmessage = (event) => {
+                
+                document.getElementById("receivedMessage").innerHTML = event.data;
+            }
+            
+        }
+    </script>
+    <button onclick="sendMessage()">send message</button>
+    <button onclick="receiveMessage()">receive message</button>
+    <p id="receivedMessage"></p>
+</body>
+</html>
