@@ -13,25 +13,16 @@ server.on('connection', socket => {
             client.send(message);
         })
     })
+    
 })
+setInterval(function() {
+    socket.emit('message', "You will listen to me");
+}, 5000)
 
 socket.addEventListener('open', () => {
-    socket.send('hello world');
+    socket.send('Hello');
 });
 
 socket.addEventListener('message', event => {
     console.log("message from server: " + event.data);
 });
-
-function sendMessage(socket, userName, content){
-    socket.send(
-        JSON.stringify({
-            userName,
-            content
-        })
-    );
-}
-
-function receiveMessage(message){
-    console.log(userName + " is saying: "+ message.content);
-}
